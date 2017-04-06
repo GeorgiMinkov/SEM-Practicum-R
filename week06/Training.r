@@ -63,3 +63,33 @@ a = coefs[2]
 price75 = a * 75000 + b
 
 # !!!!!!!!!!!!!!!!!!!!!!!!GENERATING RANDOM DATA!!!!!!!!!!!!!!!!!!!!!!!!
+sample(1:100, 10)
+sample(1:100, 10, replace = F) # с връщане 
+sample(1:6, 10, replace = TRUE)
+# Разпределението казва за всяка стойност вероятност (съпоставя вероятност)
+
+# Плтъност P(x = a) = p0
+# Funkciq na razprostranenie
+# F(X = a) => P(X <= a)
+
+x = runif(50, 0, 5)
+x
+
+hist(x, probability = TRUE, col = "RED", main = "uniform data on")
+
+
+curve(dunif(x, min = 0, max = 1), add = T)
+
+?rnorm
+
+# TASK:
+x = rnorm(80, mean = 4, sd = 1.1)
+x[which(x >= 2 & x <= 6)]
+
+# Binomiam
+s <- rbinom(30, 6, 1/6)
+table(s)
+hist(rbinom(10000, 10000, 0.25), probability = TRUE)
+
+# Exponential
+x = rexp(100, 1/25000)
