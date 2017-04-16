@@ -1,0 +1,6 @@
+data("mammals")
+attach(mammals)
+head(mammals)
+plot(body, brain)
+plot(log(body), log(brain))
+cor(body, brain)
