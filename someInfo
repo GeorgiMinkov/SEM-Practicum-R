@@ -1,0 +1,82 @@
+simple.z.test = function(x,sigma,conf.level=0.95) {
+  n = length(x)
+  xbar = mean(x)
+  alpha = 1 - conf.level
+  zstar = qnorm(1-alpha/2)
+  SE = sigma/sqrt(n)
+  xbar + c(-zstar*SE,zstar*SE)
+}
+simple.z.test(x,1.5)
+
+z.test = function(x, sigma, alpha) {
+  sample_mean = mean(x)
+  z_star_left = qnorm(alpha/2)
+  z_star_right = qnorm(1 - alpha/2)
+  sample_mean - c(z_star_right*sigma/sqrt(length(x)), z_star_left*sigma/sqrt(length(x)))
+}
+
+x = rbinom(40, 10, 0.2)
+sigma = sqrt(40 * 0.2 * 0.8)
+z.test(x, sigma, 0.05)
+
+library(UsingR)
+simple.z.test(x, sigma)
+
+
+ttest = function(x, alpha) {
+  sigma = sd(x)
+  sample_mean = mean(x)
+  z_star_left = qt(alpha/2, length(x) - 1)
+  z_star_right = qt(1 - alpha/2,length(x) - 1)
+  sample_mean - c(z_star_right*sigma/sqrt(length(x)), z_star_left*sigma/sqrt(length(x)))
+}
+ttest(x, 0.05)
+
+t.test(x)
+
+
+## Two-sample tests 
+
+## proportion
+prop.test(c(45, 56), c(45 + 35, 56 + 47))
+
+####
+# mean
+# drug and placebo
+x = c(15, 10, 13, 7, 9, 8, 21, 9, 14, 8)
+y = c(15, 14, 12, 8, 14, 7, 16, 10, 15, 12)
+shapiro.test(x)
+shapiro.test(y)
+t.test(x,y,alt="greater", var.equal=TRUE)
+
+#### Paired tests
+x = c(3, 0, 5, 2, 5, 5, 5, 4, 4, 5)
+y = c(2, 1, 4, 1, 4, 3, 3, 2, 3, 5)
+hist(x)
+shapiro.test(x)
+shapiro.test(y)
+wilcox.test(x,y,paired=TRUE)
+########
+attach(homework)
+boxplot(Private, Public)
+t.test(Private, Public, alternative = "less")
+########
+other = 150 - sum(c(13, 10, 42, 65, 150))
+other_exp = 1- sum(c(0.2, 0.05, 0.1, 0.4, 0.2))
+expected <- c(0.2, 0.05, 0.1, 0.4, 0.2, other_exp)
+observed <- c(13, 10, 42, 65, 150, other)
+chisq.test(observed, 150*expected)
+######### shop
+observed <- c(30,14,34,45,57,20)
+expected <- c(.1, .1, .15, .2, .3,.15)
+chisq.test(observed,p=expected)
+
+####### dice
+freq = c(22,21,22,27,22,36) # specify probabilities, (uniform, like this, is default though)
+probs = rep(1/6,6)
+chisq.test(freq, p=probs)
+
+#######
+yesbelt = c(12813,647,359,42)
+nobelt = c(65963,4000,2642,303)
+chisq.test(data.frame(yesbelt,nobelt))
